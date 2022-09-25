@@ -12,7 +12,7 @@ as taken from http://docs.python.org/dev/library/ssl.html#certificates
 
 '''
 
-import os, sys, time, errno, signal, socket, select, logging
+import os, sys, time, errno, signal, socket, select, logging, gzip
 import multiprocessing
 from http.server import SimpleHTTPRequestHandler
 
@@ -231,10 +231,10 @@ class WebSockifyRequestHandler(WebSocketRequestHandlerMixIn, SimpleHTTPRequestHa
 
         if self.record:
             # Record raw frame data as JavaScript array
-            fname = "%s.%s" % (self.record,
+            fname = "%s.%s.gz" % (self.record,
                                self.handler_id)
             self.log_message("opening record file: %s", fname)
-            self.rec = open(fname, 'w+')
+            self.rec = gzip.open(fname, 'w+')
             self.rec.write("var VNC_frame_data = [\n")
 
         try:

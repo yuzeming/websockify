@@ -163,10 +163,13 @@ Traffic Legend:
 
         result_pair = target_plugin.lookup(token)
 
-        if result_pair is not None:
-            return result_pair
-        else:
+        if result_pair is None:
             raise self.server.EClose("Token '%s' not found" % token)
+        
+        if self.record:
+            self.record = self.record.format(token=token, host=result_pair[0], port=result_pair[1])
+
+        return result_pair
 
     def do_proxy(self, target):
         """
