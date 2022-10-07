@@ -231,10 +231,10 @@ class WebSockifyRequestHandler(WebSocketRequestHandlerMixIn, SimpleHTTPRequestHa
 
         if self.record:
             # Record raw frame data as JavaScript array
-            fname = "%s.%s.gz" % (self.record,
+            fname = "%s.%s" % (self.record,
                                self.handler_id)
             self.log_message("opening record file: %s", fname)
-            self.rec = gzip.open(fname, 'w+')
+            self.rec = open(fname, 'w+')
             self.rec.write("var VNC_frame_data = [\n")
 
         try:
